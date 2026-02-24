@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>saltspring.ai | Empowering Agency</title>
+<meta name="description" content="A five-day AI workshop on Salt Spring Island, July 7 to 11, 2026. Visualization, motion, sound, data, and art.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --forest: #2D4A3E;
+  --moss: #5B7F6E;
+  --sage: #8FAE8B;
+  --sand: #E8DCC8;
+  --cream: #F5F0E8;
+  --warm-white: #FDFCF9;
+  --ocean: #3B6B7C;
+  --ocean-light: #5A9BAD;
+  --clay: #C4896E;
+  --clay-dark: #A06B52;
+  --charcoal: #2A2A28;
+  --text: #3A3A38;
+  --text-light: #6B6B68;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+  background: var(--warm-white);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+h1, h2, h3 { font-family: 'DM Serif Display', serif; font-weight: 400; }
+
+/* ---- HERO ---- */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  padding: 2rem;
+  overflow: hidden;
+  background: linear-gradient(170deg, var(--forest) 0%, #3A5F50 40%, var(--ocean) 100%);
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-bg canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+}
+
+.hero-badge {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--sage);
+  border: 1px solid rgba(143, 174, 139, 0.4);
+  padding: 0.5rem 1.2rem;
+  border-radius: 100px;
+  margin-bottom: 2rem;
+  backdrop-filter: blur(4px);
+  background: rgba(45, 74, 62, 0.3);
+}
+
+.hero h1 {
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  color: var(--cream);
+  line-height: 1.05;
+  margin-bottom: 0.3em;
+  letter-spacing: -0.02em;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--sage);
+}
+
+.hero-sub {
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  color: rgba(232, 220, 200, 0.75);
+  font-weight: 300;
+  max-width: 550px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.7;
+}
+
+.hero-date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  color: var(--sand);
+  margin-bottom: 2.5rem;
+  letter-spacing: 0.05em;
+}
+
+.hero-date span {
+  color: var(--clay);
+  font-weight: 500;
+}
+
+.btn {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  border-radius: 100px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background: var(--clay);
+  color: var(--warm-white);
+}
+.btn-primary:hover {
+  background: var(--clay-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(196, 137, 110, 0.35);
+}
+
+.btn-disabled {
+  background: rgba(232, 220, 200, 0.2);
+  color: rgba(232, 220, 200, 0.4);
+  cursor: default;
+  border: 1.5px solid rgba(232, 220, 200, 0.15);
+}
+.btn-disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--cream);
+  border: 1.5px solid rgba(232, 220, 200, 0.4);
+  margin-left: 1rem;
+}
+.btn-outline:hover {
+  border-color: var(--cream);
+  background: rgba(232, 220, 200, 0.08);
+}
+
+.hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+.scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  animation: float 3s ease-in-out infinite;
+}
+
+.scroll-hint svg { width: 24px; height: 24px; stroke: rgba(232, 220, 200, 0.4); }
+
+@keyframes float {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(10px); }
+}
+
+/* ---- ABOUT ---- */
+.section {
+  padding: 6rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--moss);
+  margin-bottom: 1.5rem;
+}
+
+.about-text {
+  font-size: clamp(1.15rem, 2.5vw, 1.4rem);
+  line-height: 1.8;
+  color: var(--text);
+  max-width: 750px;
+  font-weight: 300;
+}
+
+.about-text strong {
+  font-weight: 500;
+  color: var(--forest);
+}
+
+/* ---- TRACKS ---- */
+.tracks-section {
+  background: var(--cream);
+  padding: 6rem 2rem;
+}
+
+.tracks-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.tracks-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.tracks-header h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--forest);
+  margin-bottom: 1rem;
+}
+
+.tracks-header p {
+  color: var(--text-light);
+  font-size: 1.05rem;
+  max-width: 550px;
+  margin: 0 auto;
+}
+
+.tracks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.track-card {
+  background: var(--warm-white);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s;
+  cursor: default;
+}
+
+.track-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(45, 74, 62, 0.1);
+}
+
+.track-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.track-card:nth-child(1) .track-icon { background: rgba(59, 107, 124, 0.12); color: var(--ocean); }
+.track-card:nth-child(2) .track-icon { background: rgba(143, 174, 139, 0.2); color: var(--moss); }
+.track-card:nth-child(3) .track-icon { background: rgba(196, 137, 110, 0.15); color: var(--clay); }
+.track-card:nth-child(4) .track-icon { background: rgba(45, 74, 62, 0.12); color: var(--forest); }
+
+.track-card h3 {
+  font-size: 1.4rem;
+  color: var(--forest);
+  margin-bottom: 0.75rem;
+}
+
+.track-card p {
+  color: var(--text-light);
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+.track-accent {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+}
+
+.track-card:nth-child(1) .track-accent { background: var(--ocean); }
+.track-card:nth-child(2) .track-accent { background: var(--moss); }
+.track-card:nth-child(3) .track-accent { background: var(--clay); }
+.track-card:nth-child(4) .track-accent { background: var(--forest); }
+
+/* ---- ART SHOW BANNER ---- */
+.art-show {
+  background: var(--forest);
+  padding: 5rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.art-show::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 50%, rgba(143, 174, 139, 0.15) 0%, transparent 70%),
+              radial-gradient(ellipse at 70% 50%, rgba(59, 107, 124, 0.15) 0%, transparent 70%);
+}
+
+.art-show-content { position: relative; z-index: 1; }
+
+.art-show h2 {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  color: var(--cream);
+  margin-bottom: 1rem;
+}
+
+.art-show p {
+  color: rgba(232, 220, 200, 0.7);
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+.art-show .art-date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--sage);
+  margin-top: 1.5rem;
+  letter-spacing: 0.1em;
+}
+
+/* ---- SCHEDULE ---- */
+.schedule-grid {
+  display: grid;
+  gap: 0;
+  margin-top: 2.5rem;
+}
+
+.schedule-day {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  border-bottom: 1px solid rgba(45, 74, 62, 0.1);
+  padding: 1.5rem 0;
+  align-items: start;
+}
+
+.schedule-day:last-child { border-bottom: none; }
+
+.schedule-date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--moss);
+  letter-spacing: 0.05em;
+  padding-top: 0.2rem;
+}
+
+.schedule-date strong {
+  display: block;
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--forest);
+  margin-bottom: 0.2rem;
+}
+
+.schedule-info h3 {
+  font-size: 1.15rem;
+  color: var(--charcoal);
+  margin-bottom: 0.3rem;
+}
+
+.schedule-info p {
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.schedule-tag {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.7rem;
+  border-radius: 100px;
+  margin-top: 0.5rem;
+  letter-spacing: 0.05em;
+}
+
+.tag-viz { background: rgba(59, 107, 124, 0.1); color: var(--ocean); }
+.tag-motion { background: rgba(143, 174, 139, 0.15); color: var(--moss); }
+.tag-sound { background: rgba(196, 137, 110, 0.12); color: var(--clay); }
+.tag-data { background: rgba(45, 74, 62, 0.1); color: var(--forest); }
+.tag-art { background: rgba(196, 137, 110, 0.15); color: var(--clay-dark); }
+
+/* ---- APPLICATION FORM ---- */
+.apply-section {
+  background: linear-gradient(175deg, var(--cream) 0%, var(--warm-white) 100%);
+  padding: 6rem 2rem;
+}
+
+.apply-inner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.apply-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.apply-header h2 {
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  color: var(--forest);
+  margin-bottom: 0.75rem;
+}
+
+.apply-header p {
+  color: var(--text-light);
+  font-size: 1rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 1.8rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--forest);
+  margin-bottom: 0.5rem;
+}
+
+label .required { color: var(--clay); }
+
+input, textarea, select {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1.5px solid rgba(45, 74, 62, 0.15);
+  border-radius: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.92rem;
+  color: var(--text);
+  background: var(--warm-white);
+  transition: border-color 0.3s, box-shadow 0.3s;
+  outline: none;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: var(--moss);
+  box-shadow: 0 0 0 3px rgba(91, 127, 110, 0.12);
+}
+
+textarea { resize: vertical; min-height: 120px; }
+
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%235B7F6E' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+
+.checkbox-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+}
+
+.checkbox-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--moss);
+  cursor: pointer;
+}
+
+.checkbox-item span {
+  font-size: 0.88rem;
+  color: var(--text);
+}
+
+.form-note {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  margin-top: 0.4rem;
+}
+
+.form-divider {
+  height: 1px;
+  background: rgba(45, 74, 62, 0.1);
+  margin: 2.5rem 0;
+}
+
+.form-section-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.3rem;
+  color: var(--forest);
+  margin-bottom: 1.5rem;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 1.1rem;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+.form-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+/* Success message */
+.form-success {
+  display: none;
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+.form-success.visible { display: block; }
+
+.form-success svg {
+  width: 64px;
+  height: 64px;
+  color: var(--moss);
+  margin-bottom: 1.5rem;
+}
+
+.form-success h3 {
+  font-size: 1.6rem;
+  color: var(--forest);
+  margin-bottom: 0.75rem;
+}
+
+.form-success p {
+  color: var(--text-light);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* ---- FOOTER ---- */
+footer {
+  background: var(--charcoal);
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.footer-logo {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  color: var(--sand);
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+footer p {
+  color: rgba(232, 220, 200, 0.4);
+  font-size: 0.85rem;
+}
+
+footer a {
+  color: var(--sage);
+  text-decoration: none;
+}
+
+/* ---- ANIMATIONS ---- */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 768px) {
+  .hero { min-height: 90vh; padding: 2rem 1.5rem; }
+  .section { padding: 4rem 1.5rem; }
+  .tracks-section { padding: 4rem 1.5rem; }
+  .tracks-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .checkbox-group { grid-template-columns: 1fr; }
+  .schedule-day { grid-template-columns: 1fr; gap: 0.5rem; }
+  .hero-buttons { flex-direction: column; align-items: center; }
+  .btn-outline { margin-left: 0; }
+  .apply-section { padding: 4rem 1.5rem; }
+}
+
+/* ---- NAV ---- */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 1.2rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.4s;
+}
+
+.nav.scrolled {
+  background: rgba(45, 74, 62, 0.95);
+  backdrop-filter: blur(12px);
+  padding: 0.8rem 2rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.nav-brand {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  color: var(--cream);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  color: rgba(232, 220, 200, 0.7);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 400;
+  transition: color 0.3s;
+  letter-spacing: 0.02em;
+}
+
+.nav-links a:hover { color: var(--cream); }
+
+.nav-apply {
+  padding: 0.5rem 1.2rem;
+  background: rgba(196, 137, 110, 0.2);
+  border: 1px solid rgba(196, 137, 110, 0.4);
+  border-radius: 100px;
+  color: var(--sand) !important;
+  font-weight: 500 !important;
+  transition: all 0.3s !important;
+}
+
+.nav-apply:hover {
+  background: var(--clay) !important;
+  color: var(--warm-white) !important;
+}
+
+/* Mobile nav */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+
+.nav-toggle span {
+  width: 22px;
+  height: 2px;
+  background: var(--cream);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background: rgba(45, 74, 62, 0.97);
+    backdrop-filter: blur(12px);
+    padding: 1.5rem 2rem;
+    gap: 1rem;
+  }
+  .nav-links.open { display: flex; }
+  .nav-toggle { display: flex; }
+}
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav" id="nav">
+  <a href="#" class="nav-brand">saltspring.ai</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#tracks">Tracks</a></li>
+    <li><a href="#schedule">Schedule</a></li>
+    <li><span class="nav-apply" style="opacity: 0.5; cursor: default;">Apply</span></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="home">
+  <div class="hero-bg"><canvas id="heroCanvas"></canvas></div>
+  <div class="hero-content">
+    <div class="hero-badge">Salt Spring Island &middot; Summer 2026</div>
+    <h1>Empowering<br><em>Agency</em></h1>
+    <p class="hero-sub">How AI can help empower anyone to address local problems. A five-day creative workshop capped off with a curated art show.</p>
+    <div class="hero-date">
+      <span>July 7 to 11, 2026</span>
+    </div>
+    <div class="hero-buttons">
+      <span class="btn btn-disabled">Applications Opening Soon</span>
+      <a href="#about" class="btn btn-outline">Learn More</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+      <path d="M12 5v14M19 12l-7 7-7-7"/>
+    </svg>
+  </div>
+</section>
+
+<!-- About -->
+<section class="section" id="about">
+  <div class="reveal">
+    <p class="section-label">About the Workshop</p>
+    <p class="about-text">
+      This summer, Salt Spring Island becomes a launchpad for <strong>a creative AI community</strong> across the Gulf Islands and surrounding areas. Over five immersive days, participants will explore four key areas of AI application: <strong>visualization, motion, sound, and data</strong>, guided by presenters from diverse creative and technical backgrounds.
+    </p>
+    <br>
+    <p class="about-text">
+      The week caps off with a <strong>curated public art show</strong> featuring provocative creative works exploring AI and agency. Whether you're a programmer, artist, musician, designer, researcher, or simply curious, this is your invitation to shape how AI serves our community.
+    </p>
+    <br>
+    <p class="about-text" style="color: var(--text-light); font-size: 1rem;">
+      Space is limited and participation requires a short application. We're looking for presenters and participants from any creative or technical background.
+    </p>
+  </div>
+</section>
+
+<!-- Tracks -->
+<section class="tracks-section" id="tracks">
+  <div class="tracks-inner">
+    <div class="tracks-header reveal">
+      <p class="section-label">Workshop Tracks</p>
+      <h2>Four Paths of Exploration</h2>
+      <p>Each track runs as a focused deep-dive with hands-on sessions, collaborative projects, and creative challenges.</p>
+    </div>
+    <div class="tracks-grid">
+      <div class="track-card reveal reveal-delay-1">
+        <div class="track-accent"></div>
+        <div class="track-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20M2 12h20"/></svg>
+        </div>
+        <h3>Visualization</h3>
+        <p>From data storytelling to generative imagery. Explore how AI transforms raw information into compelling visual narratives and art.</p>
+      </div>
+      <div class="track-card reveal reveal-delay-2">
+        <div class="track-accent"></div>
+        <div class="track-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+        </div>
+        <h3>Motion</h3>
+        <p>Animation, video, and embodied AI. Discover tools that bring movement and life to creative projects, from film to robotics.</p>
+      </div>
+      <div class="track-card reveal reveal-delay-3">
+        <div class="track-accent"></div>
+        <div class="track-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        </div>
+        <h3>Sound</h3>
+        <p>Music generation, audio synthesis, and sonic landscapes. Use AI to compose, remix, and reimagine what sound can be.</p>
+      </div>
+      <div class="track-card reveal reveal-delay-4">
+        <div class="track-accent"></div>
+        <div class="track-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        </div>
+        <h3>Data</h3>
+        <p>Local datasets, community insights, and practical intelligence. Learn how AI can help solve real problems on the island and beyond.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Art Show -->
+<section class="art-show">
+  <div class="art-show-content reveal">
+    <p class="section-label" style="color: var(--sage);">Closing Event</p>
+    <h2>The Art Show</h2>
+    <p>The week closes with a curated public exhibition of provocative creative works exploring the intersection of AI and human agency.</p>
+    <p class="art-date">Saturday, July 11 &middot; Salt Spring Island</p>
+  </div>
+</section>
+
+<!-- Schedule -->
+<section class="section" id="schedule">
+  <div class="reveal">
+    <p class="section-label">Preliminary Schedule</p>
+    <h2 style="font-size: clamp(2rem, 4vw, 2.8rem); color: var(--forest); margin-bottom: 0.5rem;">The Week at a Glance</h2>
+    <p style="color: var(--text-light); margin-bottom: 1rem;">Full schedule to be confirmed. Daily sessions include workshops, collaborative time, and evening gatherings.</p>
+  </div>
+  <div class="schedule-grid">
+    <div class="schedule-day reveal">
+      <div class="schedule-date"><strong>Day 1</strong>Tue Jul 7</div>
+      <div class="schedule-info">
+        <h3>Opening &amp; Visualization</h3>
+        <p>Welcome reception, keynote, and the first deep-dive into AI-driven visualization.</p>
+        <span class="schedule-tag tag-viz">Visualization</span>
+      </div>
+    </div>
+    <div class="schedule-day reveal">
+      <div class="schedule-date"><strong>Day 2</strong>Wed Jul 8</div>
+      <div class="schedule-info">
+        <h3>Motion</h3>
+        <p>Hands-on workshops exploring animation, video generation, and embodied AI applications.</p>
+        <span class="schedule-tag tag-motion">Motion</span>
+      </div>
+    </div>
+    <div class="schedule-day reveal">
+      <div class="schedule-date"><strong>Day 3</strong>Thu Jul 9</div>
+      <div class="schedule-info">
+        <h3>Sound</h3>
+        <p>AI-assisted music and audio creation. Collaborative sound sessions and performances.</p>
+        <span class="schedule-tag tag-sound">Sound</span>
+      </div>
+    </div>
+    <div class="schedule-day reveal">
+      <div class="schedule-date"><strong>Day 4</strong>Fri Jul 10</div>
+      <div class="schedule-info">
+        <h3>Data</h3>
+        <p>Working with local datasets and community problems. Practical AI for island life.</p>
+        <span class="schedule-tag tag-data">Data</span>
+      </div>
+    </div>
+    <div class="schedule-day reveal">
+      <div class="schedule-date"><strong>Day 5</strong>Sat Jul 11</div>
+      <div class="schedule-info">
+        <h3>The Art Show</h3>
+        <p>Curated exhibition of provocative creative works. Closing celebration and community gathering.</p>
+        <span class="schedule-tag tag-art">Exhibition</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Application section placeholder - coming soon -->
+<section class="apply-section" id="apply" style="padding: 5rem 2rem;">
+  <div style="max-width: 600px; margin: 0 auto; text-align: center;" class="reveal">
+    <p class="section-label">Stay Tuned</p>
+    <h2 style="font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 4vw, 2.8rem); color: var(--forest); margin-bottom: 0.75rem;">Applications Opening Soon</h2>
+    <p style="color: var(--text-light); font-size: 1.05rem; line-height: 1.7;">We're looking for presenters and participants from any creative or technical background. Check back here shortly for the full application.</p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">saltspring.ai</div>
+  <p>Empowering Agency &middot; July 7 to 11, 2026 &middot; Salt Spring Island</p>
+  <p style="margin-top: 0.8rem;"><a href="mailto:shack-easily-colt@duck.com">Get in touch</a></p>
+</footer>
+
+<script>
+// ---- Organic flowing background on hero ----
+const canvas = document.getElementById('heroCanvas');
+const ctx = canvas.getContext('2d');
+let w, h, particles = [];
+
+function resize() {
+  w = canvas.width = canvas.offsetWidth;
+  h = canvas.height = canvas.offsetHeight;
+}
+
+class Particle {
+  constructor() {
+    this.reset();
+  }
+  reset() {
+    this.x = Math.random() * w;
+    this.y = Math.random() * h;
+    this.size = Math.random() * 2 + 0.5;
+    this.speedX = (Math.random() - 0.5) * 0.3;
+    this.speedY = (Math.random() - 0.5) * 0.3;
+    this.opacity = Math.random() * 0.3 + 0.05;
+    this.life = Math.random() * 300 + 200;
+    this.maxLife = this.life;
+  }
+  update() {
+    this.x += this.speedX + Math.sin(this.y * 0.005 + Date.now() * 0.0005) * 0.2;
+    this.y += this.speedY + Math.cos(this.x * 0.005 + Date.now() * 0.0003) * 0.15;
+    this.life--;
+    if (this.life <= 0 || this.x < -20 || this.x > w + 20 || this.y < -20 || this.y > h + 20) {
+      this.reset();
+    }
+  }
+  draw() {
+    const fade = Math.min(1, this.life / 50, (this.maxLife - this.life) / 50);
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(143, 174, 139, ${this.opacity * fade})`;
+    ctx.fill();
+  }
+}
+
+function initParticles() {
+  particles = [];
+  const count = Math.min(80, Math.floor(w * h / 12000));
+  for (let i = 0; i < count; i++) {
+    particles.push(new Particle());
+  }
+}
+
+function drawConnections() {
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 120) {
+        const opacity = (1 - dist / 120) * 0.08;
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = `rgba(143, 174, 139, ${opacity})`;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+    }
+  }
+}
+
+function animate() {
+  ctx.clearRect(0, 0, w, h);
+  particles.forEach(p => { p.update(); p.draw(); });
+  drawConnections();
+  requestAnimationFrame(animate);
+}
+
+window.addEventListener('resize', () => { resize(); initParticles(); });
+resize();
+initParticles();
+animate();
+
+// ---- Scroll reveal ----
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+reveals.forEach(el => observer.observe(el));
+
+// ---- Sticky nav ----
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ---- Mobile nav ----
+const navToggle = document.getElementById('navToggle');
+const navLinks = document.getElementById('navLinks');
+navToggle.addEventListener('click', () => {
+  navLinks.classList.toggle('open');
+});
+navLinks.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => navLinks.classList.remove('open'));
+});
+
+// ---- Smooth scroll for anchor links ----
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+
+</body>
+</html>
