@@ -56,22 +56,24 @@
                 text-align: center;
                 position: relative;
                 padding: 2rem;
-                background: linear-gradient(
-                    170deg,
-                    var(--forest) 0%,
-                    #3a5f50 40%,
-                    var(--ocean) 100%
-                );
+                background: var(--charcoal);
             }
 
             .bg {
                 position: absolute;
                 inset: 0;
                 z-index: 0;
+                background: url('img/ea-circuit-currents_20260301-212632.png') center center / cover no-repeat;
+                opacity: 0.45;
             }
-            .bg canvas {
-                width: 100%;
-                height: 100%;
+
+            .bg-overlay {
+                position: absolute;
+                inset: 0;
+                z-index: 1;
+                background:
+                    radial-gradient(ellipse at center, rgba(30, 45, 42, 0.5) 0%, rgba(30, 45, 42, 0.85) 70%),
+                    linear-gradient(to bottom, rgba(30, 45, 42, 0.3) 0%, rgba(30, 45, 42, 0.6) 100%);
             }
 
             .content {
@@ -130,8 +132,8 @@
                 padding: 0.45rem 1.1rem;
                 border-radius: 100px;
                 margin-bottom: 2.2rem;
-                background: rgba(45, 74, 62, 0.25);
-                backdrop-filter: blur(4px);
+                background: rgba(30, 45, 42, 0.4);
+                backdrop-filter: blur(8px);
             }
 
             h1 {
@@ -255,7 +257,8 @@
     </head>
     <body>
         <div class="page">
-            <div class="bg"><canvas id="c"></canvas></div>
+            <div class="bg"></div>
+            <div class="bg-overlay"></div>
             <div class="brand">saltspring.ai</div>
             <div class="content">
                 <div class="badge">Salt Spring Island &middot; Summer 2026</div>
@@ -280,97 +283,5 @@
             </div>
         </div>
 
-        <script>
-            const canvas = document.getElementById("c");
-            const ctx = canvas.getContext("2d");
-            let w,
-                h,
-                particles = [];
-
-            function resize() {
-                w = canvas.width = canvas.offsetWidth;
-                h = canvas.height = canvas.offsetHeight;
-            }
-
-            class Particle {
-                constructor() {
-                    this.reset();
-                }
-                reset() {
-                    this.x = Math.random() * w;
-                    this.y = Math.random() * h;
-                    this.size = Math.random() * 2.2 + 0.5;
-                    this.speedX = (Math.random() - 0.5) * 0.12;
-                    this.speedY = (Math.random() - 0.5) * 0.12;
-                    this.opacity = Math.random() * 0.2 + 0.03;
-                    this.life = Math.random() * 500 + 300;
-                    this.maxLife = this.life;
-                }
-                update() {
-                    this.x +=
-                        this.speedX +
-                        Math.sin(this.y * 0.003 + Date.now() * 0.00015) * 0.08;
-                    this.y +=
-                        this.speedY +
-                        Math.cos(this.x * 0.003 + Date.now() * 0.00012) * 0.06;
-                    this.life--;
-                    if (
-                        this.life <= 0 ||
-                        this.x < -20 ||
-                        this.x > w + 20 ||
-                        this.y < -20 ||
-                        this.y > h + 20
-                    )
-                        this.reset();
-                }
-                draw() {
-                    const fade = Math.min(
-                        1,
-                        this.life / 60,
-                        (this.maxLife - this.life) / 60,
-                    );
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(143, 174, 139, ${this.opacity * fade})`;
-                    ctx.fill();
-                }
-            }
-
-            function init() {
-                particles = [];
-                const count = Math.min(45, Math.floor((w * h) / 20000));
-                for (let i = 0; i < count; i++) particles.push(new Particle());
-            }
-
-            function draw() {
-                ctx.clearRect(0, 0, w, h);
-                for (let i = 0; i < particles.length; i++) {
-                    particles[i].update();
-                    particles[i].draw();
-                    for (let j = i + 1; j < particles.length; j++) {
-                        const dx = particles[i].x - particles[j].x;
-                        const dy = particles[i].y - particles[j].y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 110) {
-                            ctx.beginPath();
-                            ctx.moveTo(particles[i].x, particles[i].y);
-                            ctx.lineTo(particles[j].x, particles[j].y);
-                            ctx.strokeStyle = `rgba(143, 174, 139, ${(1 - dist / 110) * 0.06})`;
-                            ctx.lineWidth = 0.5;
-                            ctx.stroke();
-                        }
-                    }
-                }
-                requestAnimationFrame(draw);
-            }
-
-            window.addEventListener("resize", () => {
-                resize();
-                init();
-            });
-            resize();
-            init();
-            draw();
-        </script>
     </body>
 </html>
